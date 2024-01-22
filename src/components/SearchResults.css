@@ -1,0 +1,21 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.results-list {
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 0px 8px #fff;
+    border-radius: 1rem;
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+.search-result {
+    padding: 10px 20px;
+
+}
+.search-result:hover{
+    background-color: #efefef;
+}
