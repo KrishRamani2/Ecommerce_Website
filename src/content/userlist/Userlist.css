@@ -1,0 +1,12 @@
+.container{
+    flex:4;
+}
+.ant-table {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Optionally, you can set a specific height for the table container if needed */
+  .ant-table-container {
+    height: 100%;
+  }
