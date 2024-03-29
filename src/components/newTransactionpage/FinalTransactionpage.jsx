@@ -1,18 +1,18 @@
 import React from 'react'
 import Topbar from '../topbar/Topbar'
 import Sidebar from '../Sidebar/Sidebar'
-import Newuser from '../../content/NewUserPage/Newuser'
-
-const NewUserpage = () => {
+import TranscationPage from '../../content/Transaction/TranscationPage'
+import "./NewTransactionpage.css"
+const NewTransactionpage = () => {
   return (
     <div>
       <Topbar/>
     <div className="container">
         <Sidebar />
-        <Newuser />
+        <TranscationPage />
         </div>
     </div>
   )
 }
 
-export default NewUserpage
+export default NewTransactionpage

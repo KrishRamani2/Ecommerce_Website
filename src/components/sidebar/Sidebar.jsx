@@ -14,21 +14,14 @@ import { CiMail } from "react-icons/ci";
 import { MdManageAccounts } from "react-icons/md";
 import { MdReportGmailerrorred } from "react-icons/md";
 import {Link ,  useNavigate} from "react-router-dom"
-import { logout } from '../../redux/ApiCallsAdmin';
+import { logout as logoutAction } from '../../redux/Userslice';
+import { useDispatch } from 'react-redux';
 const Sidebar = () => {
   const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    try {
-      // Perform logout logic
-      await logout();
-
-      // Redirect to the login page
-      navigate('/');
-    } catch (error) {
-      console.error('Logout failed:', error);
-      // Handle logout failure if needed
-    }
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logoutAction());
+    navigate("/");
   };
   return (
     <>
@@ -37,7 +30,7 @@ const Sidebar = () => {
         <div className="sidebarMenu">
         <h3 className="sidebarTitle">DashBoard</h3>
         <ul className="sidebarList">
-           <Link to="/adminpage" style={{textDecoration:"none"}}><li className="sidebarListItem active ">
+           <Link to="/adminpage" style={{textDecoration:"none"}}><li className="sidebarListItem  ">
             <IoHomeOutline  style={{fontSize:"25px",padding:"2px"}} className='sidebarIcon'/> <div style={{marginTop:"5px"}}>Home</div> 
           </li></Link>
           <li className="sidebarListItem">
@@ -57,9 +50,9 @@ const Sidebar = () => {
           <Link to="/adminproduct" style={{textDecoration:"none"}}><li className="sidebarListItem">
             <BsShop style={{fontSize:"25px",padding:"2px"}}/> <div style={{marginTop:"8px"}}>Products</div> 
           </li></Link>
-          <li className="sidebarListItem">
+          <Link to="/transaction" style={{textDecoration:"none"}}><li className="sidebarListItem">
             <LuCircleDollarSign style={{fontSize:"25px",padding:"2px"}}/> Transactions
-          </li>
+          </li></Link>
           <li className="sidebarListItem">
             <FiBarChart2 style={{fontSize:"25px",padding:"2px"}}/> Reports
           </li>

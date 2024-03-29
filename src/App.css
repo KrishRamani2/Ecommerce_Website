@@ -1,0 +1,12 @@
+body {
+    overflow:auto;
+    overflow-x: hidden; 
+    /* or overflow: auto; */
+}
+/* MyComponent.css */
+Link {
+    text-decoration: none;
+    color: inherit;  /* Remove underline from links */
+  }
+
+  

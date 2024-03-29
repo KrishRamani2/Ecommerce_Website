@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Featureinfo.css"
 import { IoArrowDownCircleOutline } from "react-icons/io5";
 import { BiUpArrowCircle } from "react-icons/bi";
+import axios from 'axios';
 const Featureinfo = () => {
   return (
     <>
