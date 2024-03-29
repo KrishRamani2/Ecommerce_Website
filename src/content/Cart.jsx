@@ -10,10 +10,12 @@ import { useSelector } from "react-redux";
 import Products from "../components/Products";
 import StripeCheckout from "react-stripe-checkout"
 import { userRequest } from "./RequestMethod";
-import { useNavigate } from "react-router-dom";
-import { updateCart , addProduct ,removeAllQuantity } from "../redux/CartRedux";
+import { Link, useNavigate } from "react-router-dom";
+import { updateCart , addProduct ,removeAllQuantity, dispatchAllProducts } from "../redux/CartRedux";
 import { useDispatch } from "react-redux";
 import { ImBin } from "react-icons/im";
+
+
 const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 20px;
@@ -77,7 +79,11 @@ const Summary = styled.div`
 `;
 
 const Image = styled.img`
-  width: 200px;
+  width: 170px;
+  height: 200px;
+  object-fit: contain;
+    aspect-ratio: 3/2;
+    mix-blend-mode: color-burn;
 `;
 
 const Product = styled.div`
@@ -177,18 +183,6 @@ const SummaryButton = styled.button`
   color: white;
   font-weight: 600;
 `;
-// const RemoveButton = styled.button`
-//     background-color: #d90429;
-//   color: white;
-//   border: none;
-//   padding: 5px 10px;
-//   cursor: pointer;
-//   &:hover{
-//     background: transparent;
-//     color:#d90429;
-
-//   }
-// `
 const RemoveButton = styled.button`
   background-color: #d90429;
   color: white;
@@ -233,36 +227,29 @@ const RemoveIconss = styled(ImBin)`
 // Add a new styled component for the remove icon
 const Cart = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user); // Assuming user state is stored in Redux store
+  console.log(user)
   const cart = useSelector((state) => state.cart);
-  console.log(cart);
-
+  const navigate = useNavigate();
   const addToCart = (product) => {
     dispatch(addProduct(product));
   };
-
+  const products = useSelector((state) => state.cart.products);
   const KEY = "pk_test_51OPdfHSJqp2Eim97slkP7D9StEmIP94k7XFry53Q9sH2PxIxRvnPH4PlC8ahmHkmrEkkVxFFrShOWln6tDLE07bv00uDbzGVNR";
   const [showAlert, setShowAlert] = useState(false);
   const [subtotal, setSubtotal] = useState(0);
-
   const Incum = (productId ) => {
-    // Update the Redux store with the increased quantity
     dispatch(updateCart({ productId, quantity: 1 }));
-
-    // Update the subtotal
     const newSubtotal = subtotal ;
     setSubtotal(newSubtotal);
   };
  
   const Decum = (productId ) => {
-    // Update the Redux store with the decreased quantity
     dispatch(updateCart({ productId, quantity: -1 }));
-
-    // Update the subtotal
     const newSubtotal = subtotal ;
     setSubtotal(newSubtotal < 0 ? 0 : newSubtotal);
   };
   const removeProduct = (productId, size) => {
-    // Dispatch the removeProduct action with the productId and size
     dispatch(removeProduct({ productId , size }));
   };
   const closeAlert = () => {
@@ -271,6 +258,11 @@ const Cart = () => {
   const removeFromCart = (productId) => {
     dispatch(removeAllQuantity(productId));
   };
+  const summary = (products) =>{
+    dispatch(dispatchAllProducts(products));
+    navigate("/ordersummary")
+  }
+  console.log(products);
   useEffect(() => {
     const newSubtotal = cart.products.reduce((acc, product) => acc + product.price * product.count, 0);
     setSubtotal(newSubtotal);
@@ -284,7 +276,7 @@ const Cart = () => {
   const onToken = (token) => {
     setStripeToken(token);
   };
-    const navigate = useNavigate();
+    
   useEffect(() => {
     const makeRequest = async () => {
       try {
@@ -294,7 +286,7 @@ const Cart = () => {
         });
         if (res.success) {
           // Use navigate to go to the successful payment page
-          navigate('/successfulpayment');
+          navigate("/successfulpayment");
         }
       } catch (error) {
         console.error('Error:', error);
@@ -320,17 +312,20 @@ const Cart = () => {
           <Top>
             <TopButton>CONTINUE SHOPPING</TopButton>
             <TopTexts>
-              <TopText>Shopping Bag(2)</TopText>
+              <TopText>Shopping Bag({cart.products.length})</TopText>
               <TopText>Your Wishlist(0)</TopText>
             </TopTexts>
-            <a href="/payment"><TopButton type="filled" >CHECKOUT NOW</TopButton></a>
+            <Link to="/ordersummary"><TopButton type="filled"  onClick={summary}>CHECKOUT NOW</TopButton></Link>
           </Top>
           <Bottom>
+         
             <Info>
               {cart.products.map((product) => (
                 <Product key={product.productId}>
                   <ProductDetail>
+                  <Link to={`/productpage/${product._id}`}>
                     <Image src={product.img} />
+                    </Link>
                     <Details>
                       <ProductName>
                         <br />
@@ -339,7 +334,7 @@ const Cart = () => {
                       </ProductName>
                        <ProductID>
                         <br />
-                        <b>ID:</b>{product.productId}
+                        <b>ID:</b>{product._id.substring(5, 8)}
                       </ProductID> 
                       <ProductColor color={product.color} />
                       <ProductSize>
@@ -359,12 +354,12 @@ const Cart = () => {
               <RemoveText className="text">Remove</RemoveText>
             </RemoveButton>
                   </PriceDetail>
+                  
                 </Product>
               ))}
               
               <Hr />
             </Info>
-
             <Summary>
               <SummaryTitle>ORDER SUMMARY</SummaryTitle>
               <SummaryItem>

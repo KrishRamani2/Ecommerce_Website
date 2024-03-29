@@ -1,8 +1,15 @@
 import styled from "styled-components";
+import "./Product.css"
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { IoIosSearch } from "react-icons/io";
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import { Link } from 'react-router-dom';
+import { MdAddShoppingCart } from "react-icons/md";
+import { AiFillStar } from "react-icons/ai";
+import { BsFillBagHeartFill, BsFillHeartFill } from "react-icons/bs";
+import FilteredItem from "../content/ProductFilter/Recommended/FilteredProducts";
+import { useEffect, useState } from "react";
+import axios from "axios";
 const Info = styled.div`
   opacity: 0;
   width: 100%;
@@ -73,35 +80,64 @@ const Images = styled.img`
   z-index: 2;
   transition: all 0.5s ease;
   filter: brightness(0.9) contrast(1.2);
-
-  ${Container}:hover & {
-    /* content: ${(props) => `url(${props.item.bimg})`}; */
-    
-  }
   @media screen and (max-width:470px) {
     width:75%;
+    &:hover {
+    background-color: #e9f5f5;
+    transform: scale(1.1);
+    color: white;
+  }
   }
 `;
 
-const ProductItem = ({ item }) => {
+const ProductItem = ({ item , cat }) => {
+
   return (
-    <Container>
-      <Circle />
-      <Images src={item.img} item={item} />
-      <Info>
-        <Icon>
-          <ShoppingCartOutlinedIcon />
-        </Icon>
-        <Icon>
-        <Link to={`/productpage/${item._id}`} >
-          <IoIosSearch />
-          </Link>
-        </Icon>
-        <Icon>
-          <FavoriteBorderRoundedIcon />
-        </Icon>
-      </Info>
-    </Container>
+    // <Link to={`/productpage/${item._id}`} >
+    // <Container>
+    //   <Circle />
+    //   <Images src={item.img} item={item} />
+    //   <Info>
+    //     <Icon>
+    //       <MdAddShoppingCart />
+    //     </Icon>
+    //     <Icon>
+    //     <Link to={`/productpage/${item._id}`} >
+    //       <IoIosSearch />
+    //       </Link>
+    //     </Icon>
+    //     <Icon>
+    //       <FavoriteBorderRoundedIcon />
+    //     </Icon>
+    //   </Info>
+    // </Container>
+    // </Link>
+   <> 
+   
+    <section className="card-container">
+      <section className="card"> 
+        <img src={item.img} alt={item.categories} className="card-img" />
+        <div className="card-details">
+          <section className="card-reviews">
+            <AiFillStar className="rating-star"/>
+            <AiFillStar  className="rating-star" />
+            <AiFillStar  className="rating-star"/>
+            <AiFillStar  className="rating-star"/>
+            <span className="total-reviews">4</span>
+          </section>
+          <section className="card-price">
+            <div className="price">
+            ₹{item.price} <del>₹{item.prevPrice}</del> 
+            </div>
+            <div className="card-discount">{(((item.prevPrice-item.price)/item.prevPrice)*100).toFixed(2)}%</div> 
+            <div className="bag">
+              <BsFillBagHeartFill className="bag-icon"/>
+            </div>
+          </section>
+        </div>
+      </section>
+    </section>
+    </>
   );
 };
 

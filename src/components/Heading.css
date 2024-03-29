@@ -1,317 +1,198 @@
 *{
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-
+  font-family: Arial;
+}
+/* Add this CSS to your existing styles */
+.ant-badge {
+  overflow: hidden;
+  line-height: 1;
 }
 
-@media (max-width: 858px) {
-  .badgeContainer {
-    display: none;
-  }
-  .MoreVertIcon {
-    display: none;
-  }
-  .textCartContainer {
-    display: flex;
-    align-items: center;
-    font-size: 20px;
-    font-style: bold;
-    font-weight: 900;
-  }
+.ant-scroll-number {
+  min-width: 20px; /* Adjust the minimum width as needed */
+  height: 20px; /* Adjust the height as needed */
+  font-size: 12px; /* Adjust the font size as needed */
+  padding: 0 6px; /* Adjust the padding as needed */
 }
 
-@media (min-width: 859px) {
-  .badgeContainer {
-    display: inline-block;
-  }
-  
-  .textCartContainer {
-    display: none;
-  }
+body{
+  background: url(bg.jpg);
+  background-size: cover;
+  height: 100vh;
+  background-position: center;
 }
-
-nav {
+header{
+  width:100%;
+  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background-color: #fff; /* Set your background color here */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a box shadow */
-}
 
-#navbar {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
+  z-index: 99;
+  box-shadow: 0 0 10px #000;
+  background: white;
 }
-
-#navbar li {
-  margin-right: 15px;
-  position: relative;
-}
-
-#navbar a {
-  text-decoration: none;
-  color: #333; /* Set your text color here */
-  display: flex;
-  align-items: center;
-}
-
-#navbar a span {
-  margin-left: 5px;
-}
-
-#navbar a.active {
-  font-weight: bold;
-  color: #ff5722; /* Set your active text color here */
-}
-
-#navbar a:hover {
-  color: #ff5722; /* Set your hover text color here */
-}
-
-/* Optional: Style for the badge */
-#navbar li a[href="/cart"] {
-  text-decoration: none;
-  color: #333;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-#navbar li a[href="/cart"] .MuiBadge-dot {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-@media only screen and (max-width: 858px) {
-  .header {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   margin-right: 35px;
-  }
- .logooo{
+#chk1{
   display: none;
- }
+   
+   
 }
-@media only screen and (min-width: 858px) {
-  #hamoption {
-    display: none;
-  }
-  .searchlink{
-    display: none;
-  }
-}
-nav{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: white;
-    padding: 20px 80px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.6);
-}
-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right:auto;
-}
-h1 {
-
-    font-size: 30px;
-    font-weight: 500;
-
-}
-
-hr {
-    background-color: #eee;
-    border: none;
-    height: 1px;
-}
-wishlist {
-    display: flex;
-}
-#navbar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#navbar li{
-    list-style: none;
-    padding: 0 20px;
-    position: relative;
-}
-#navbar li a{
-    text-decoration: none;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color:black;
-    transition: 0.3s ease-in-out;
-}
-#navbar li a:hover{
-color:teal;
-
-}
-#navbar li a:hover::after{
-    content: "";
-    width: 30%;
-    height: 2px;
-    background: #17cf97;
-    position: absolute;
-    bottom: -4px;
-    left:20px;
-
-    }
-    #navbar li a:hover::after,
-    #navbar li a:active::after{
-        content: "";
-        width: 30%;
-        height: 2px;
-        background: #17cf97;
-        position: absolute;
-        bottom: -4px;
-        left:20px;
-        
-        }
-.dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    z-index: 2;
-    width: 270px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 8px;
-    transition: 0.3s ease-in-out;
-  }
-  
-  .dropdown-content a {
-    color: #333;
-    text-decoration: none;
-    display: block;
-    padding: 8px 12px;
-    transition: background-color 0.3s eas;
-  }
-  
-  .dropdown-content a:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  .arrow.up-arrow {
-    transform: rotate(-180deg);
-  }
-  .dropdown:hover .arrow {
-    transform: rotate(180deg); /* Rotate the arrow on hover */
-  }
-  /* Add these styles to your Heading.css file or your styling solution */
-
-a {
-    white-space: nowrap; /* Prevent text from wrapping */
-  }
-  
-  a span {
-    display: inline-block; /* Ensure the span is treated as a block element */
-    margin-left: 5px; /* Add spacing between "New Customer?" and "Signup" */
-  }
-#mobile {
-    color:black;
-    display: none;
-}
-.logooo{
-  padding: 10px;
-}
-@media screen and (max-width:858px){
-  #navbar {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    position:fixed;
-    top:90px;
-    right: -1000px;
-    width: 300px;
-    height: 100vh;
-    background: #eee;
-    box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);
-    padding: 40px 0 0 10px;
-    transition: 0.3s ease-in-out;
-    z-index: 3;
-}
-#navbar.active{
-  right: 0;
-}
-#mobile {
-  color:black;
-  background: #fff;
-  display: block;
-}
-.search-bar {
-  display: none;
-}
-
- #navbar li{
-  margin-bottom: 25px;
- }
-  #mobile {
-    display: block;
-  }
-#mobile i{
-  font-size: 24px;
+i{
+  color: #fff;
   cursor: pointer;
 }
-#headlogo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
+header .logo{
+  flex: 1;
+  color:#fff;
+   
+  margin-left: 50px;
+  text-transform: uppercase;
+  font-size: 15px;
 }
-  /* Add any additional styling for smaller screens here */
-}
-.dropdowns {
+header .search-box{
+  flex: 1;
   position: relative;
-  display: inline-block;
+}
+.search-box input{
+  width:100%;
+  height: 40px;
+  border: none;
+  outline: none;
+  background:#f2f2f2;
+  border-radius: 30px;
+  color:gray;
+  font-size: 16px;
+  padding-left: 5px;
+  padding-right: 40px;
+  text-align: center;
+   
 }
 
-.dropdowns-content {
-  display: none;
+.search-box button{
+  cursor: pointer;
+  width:40px;
+  height: 40px;
+  border-radius: 30px;
+  border:none;
   position: absolute;
-  background-color: #fff;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  z-index: 2;
-  width: 290px;
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 8px;
-  transition: 0.3s ease-in-out;
-  left: auto; /* Remove left property */
-  right: 0;   /* Add right property to make the dropdown wider from right to left */
+  top:0;
+  right: 0;
+  transform: scale(0.9);
+  background: green;
+  color: #fff;
 }
-
-.dropdowns-content a {
-  color: #333;
+header ul {
+  flex:2;
+  display: flex;
+  justify-content: space-evenly;
+}
+header ul li{
+  list-style: none;
+}
+header ul li a{
   text-decoration: none;
-  display: block;
-  padding: 8px 12px;
-  transition: background-color 0.3s ease;
+  color:black;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 10px 15px;
+}
+header ul li a:hover{
+  border-bottom: 2px solid cadetblue;
+}
+header .menu{
+  font-size: 2.5em;
+  display: none;
 }
 
-.dropdowns-content a:hover {
-  background-color: #f5f5f5;
+ .link{
+  text-decoration: none;
+  color: inherit;  /* Remove underline from links */
+}
+.dropdown{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+}
+.dropdown:empty {
+  border: none;
+}
+.dropdown-row {
+  cursor: pointer;
+  text-align: start;
+  margin:2px 0;
+}
+input{
+  width: 220px;
+}
+.dropdown {
+  position: relative; /* Ensure the search-box is positioned */
 }
 
-.dropdowns:hover .dropdowns-content {
-  display: block;
+.dropdown-content {
+  position: absolute;
+  top: calc(100% + 10px); /* Adjust the distance from the search bar */
+  left: 0;
+  background-color: white;
+  color:black;
+  z-index: 999;
+  /* Additional styling as needed */
+}
+@media (max-width: 400px) {
+   .options{
+    display: none; /* Hide the header options */
+  }
+  .
+  .logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-box {
+    margin-top: 10px;
+    order: 3; /* Places the search box below "Zenara" */
+  }
+}
+
+/* Heading.css */
+
+/* Your existing styles */
+
+/* Heading.css */
+
+/* Your existing styles */
+/* Heading.css */
+
+.logo h1 {
+  margin: 0;
+}
+
+.search-box {
+  margin-top: 10px;
+}
+
+@media only screen and (max-width: 400px) {
+  .logo {
+    margin-bottom: 45px;
+  }
+  .top{
+    margin-left: 55px;
+  }
+  .search-box {
+    display: block;
+    text-align: center;
+    margin-top: 45px;
+    margin-left: -325px;
+  }
+  .hamicon{
+    margin-bottom: 45px;
+  }
+}
+@media only screen and (min-width: 400px) {
+.hamicontwo{
+  display: none;
+}
 }

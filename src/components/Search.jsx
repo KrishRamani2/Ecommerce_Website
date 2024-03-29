@@ -1,3 +1,4 @@
+import { Button, Input } from 'antd';
 import React, { useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 
@@ -11,9 +12,11 @@ const SearchBar = ({setResults}) => {
         const result = json.filter((user)=>{
           return value && 
           user && 
-          user.title && 
-          user.title.toUpperCase().includes(value);
+          user.title && user.company &&
+          user.title.includes(value);
+         
         });
+        
         setResults(result);
       })
       .catch((error) => {
@@ -51,7 +54,7 @@ const SearchBar = ({setResults}) => {
           }
 
           #search-input {
-            width: 100%;
+            width: 500px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 0 5px 5px 0;
@@ -66,16 +69,22 @@ const SearchBar = ({setResults}) => {
           }
         `}
       </style>
-      <button type="button" id="search-button" onClick={handleSearch}>
+      <Button type="button" id="search-button" onClick={handleSearch}>
         <CiSearch size={20} />
-      </button>
-      <input
+      </Button>
+      <Input
         type="text"
-        id="search-input"
         placeholder="Enter your search shoes.."
         value={searchTerm}
+        style={{width:"5000px"}}
         onChange={(e) => handleSearch(e.target.value)}
       />
+              {/* <form onSubmit={handleSearch}>
+            <input type="text" name="search" id="srch" placeholder={`Search for "Shoes"`} value={value} onChange={onChange} />
+            <button  onClick={()=>onSearch(value)} >
+              <i className="fa fa-search"></i>
+            </button>
+          </form> */}
     </div>
   );
 };

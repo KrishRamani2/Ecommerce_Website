@@ -1,21 +1,38 @@
-*{
-    font-family: Arial, Helvetica, sans-serif;
-}
+/* SearchResults-LAPTOP-8S3AN09S.css */
+
+/* CSS for the search results list */
 .results-list {
-    width: 100%;
+    position: relative;
+  }
+  
+  /* CSS for the search bar container */
+  .search-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Ensure the search bar appears above other content */
     background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0px 0px 0px 8px #fff;
-    border-radius: 1rem;
-    max-height: 200px;
-    overflow-y: scroll;
-}
-
-.search-result {
-    padding: 10px 20px;
-
-}
-.search-result:hover{
-    background-color: #efefef;
-}
+    padding: 20px;
+    border-radius: 5px;
+    display: none; /* Initially hide the search container */
+  }
+  
+  /* CSS for the background overlay */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 999; /* Ensure the overlay appears below the search bar */
+    display: none; /* Initially hide the overlay */
+  }
+  
+  /* CSS to show the search container and overlay when active */
+  .search-active .overlay,
+  .search-active .search-container {
+    display: block;
+  }
+  

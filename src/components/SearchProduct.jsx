@@ -1,12 +1,16 @@
-import React from 'react'
-import "./SearchResults.css"
+import React from 'react';
 import { Link } from 'react-router-dom';
-const SearchProduct = ({result}) => {
+import "./SearchResults.css";
+
+const SearchProduct = ({ result }) => {
   return (
-    <Link to={`/productpage/${result._id}`} >
-    <div className='search-result' onClick={(e)=>alert(`Clicked on ${result.title}`)}>{result.title}</div>
+    <Link to={`/products/${result.company}`} style={{
+      textDecoration: "none",
+      color: "inherit" /* Remove underline from links */
+    }}>
+      <div className='search-result'>{result.company}</div>
     </Link>
-  )
+  );
 }
 
-export default SearchProduct
+export default SearchProduct;

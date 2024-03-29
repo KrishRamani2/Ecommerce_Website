@@ -9,9 +9,19 @@ const cartSlice = createSlice({
   },
   reducers: {
     addProduct: (state, action) => {
-      state.count += action.payload.count; // Update count based on the added product count
-      state.products.push(action.payload);
-      state.total += action.payload.price * action.payload.count;
+      const { _id, size, count, price } = action.payload;
+      const existingProductIndex = state.products.findIndex(
+        (product) => product._id === _id && product.size === size
+      );
+
+      if (existingProductIndex !== -1) {
+        state.products[existingProductIndex].count += count;
+      } else {
+        state.products.push(action.payload);
+      }
+
+      state.count += count;
+      state.total += price * count;
     },
     updateCart: (state, action) => {  
       const { productId, quantity } = action.payload;
@@ -23,12 +33,10 @@ const cartSlice = createSlice({
         const updatedCount = state.products[productIndex].count + quantity;
 
         if (updatedCount > 0) {
-          // If the updated count is greater than 0, update the count and total
           state.products[productIndex].count = updatedCount;
           state.count += quantity;
           state.total += state.products[productIndex].price * quantity;
         } else {
-          // If the updated count is 0 or negative, remove the product from the cart
           state.count -= state.products[productIndex].count;
           state.total -= state.products[productIndex].price * state.products[productIndex].count;
           state.products.splice(productIndex, 1);
@@ -47,8 +55,14 @@ const cartSlice = createSlice({
         state.products.splice(productIndex, 1);
       }
     },
+    dispatchAllProducts: (state,action) => {
+      return {
+        ...state,
+        products: action.payload, 
+      };
+    },
   },
 });
 
-export const { addProduct, updateCart , removeAllQuantity} = cartSlice.actions;
+export const { addProduct, updateCart, removeAllQuantity, dispatchAllProducts } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -1,7 +1,7 @@
 import publicRequest from "../content/RequestMethod";
 import { loginFailure, loginSuccess , loginStart } from "./UserRedux";
 
-export const login = async (dispatch,user) =>{
+const logingate = async (dispatch,user) =>{
     dispatch(loginStart());
     try {
         const res= await publicRequest.post("/auth/login",user);
@@ -10,3 +10,4 @@ export const login = async (dispatch,user) =>{
         dispatch(loginFailure());
     }
 }
+export  {logingate};

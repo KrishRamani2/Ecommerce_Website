@@ -9,11 +9,14 @@ import SearchBar from '../../../components/Search';
 import axios from 'axios';
 import {Link} from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
+import { useSelector } from 'react-redux';
+import { Badge } from '@mui/material';
 const Nav = ({handleInputChange,query, cat}) => {
   const [clicked, setClicked] = useState(false);
   const handleClick = () => {
     setClicked(!clicked);
   };
+  const count = useSelector(state=>state.cart.count);
   const [results,setResults] = useState([]);
   const [products,setProducts] = useState([]);
 
@@ -44,25 +47,27 @@ const Nav = ({handleInputChange,query, cat}) => {
         </div>
 
       <div className="nav-container">
-      <div>
-      <IoIosSearch style={{backgroundColor:"#eee"}}/>
+      <SearchBar className="search-bar" setResults={setResults}/>
+        <SearchResults results={results}/>
+      {/* <div>
       <input
        
        type="text" 
        placeholder='Search for Apple'
        />
-        </div>
+        </div> */}
       </div>
       <div className="profile-container">
-        <a href="#">
+        <Link href="#">
           <FiHeart className="nav-icons" />
-        </a>
-        <a href="">
-          <AiOutlineShoppingCart className="nav-icons" />
-        </a>
-        <a href="">
+        </Link>
+        <Link href="/cart">
+          <Badge  badgeContent={count} color="primary" >
+          <AiOutlineShoppingCart className="nav-icons" /></Badge>
+        </Link>
+        <Link href="">
           <AiOutlineUserAdd className="nav-icons" />
-        </a>
+        </Link>
       </div>
       </div>
           </div>

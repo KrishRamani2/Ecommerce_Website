@@ -1,0 +1,60 @@
+.card-container{
+    flex: 4;
+    margin: 5px;
+    min-width: 280px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 70px;
+    margin-bottom: -15px;
+    cursor: pointer;
+    
+}
+.card {
+    border: 2px solid #ededed;
+    padding: 20px;
+    cursor: pointer;
+}
+.card-img {
+    width: 13rem;
+    margin-bottom: 1rem;
+    object-fit: contain;
+    aspect-ratio: 3/2;
+    mix-blend-mode: color-burn;
+    
+}
+.card-title{
+    margin-bottom: 1rem;
+}
+.card-reviews{
+    margin-bottom: 1rem;
+    display: flex;
+}
+.rating-star{
+    color: #d5ab55;
+}
+.total-reviews{
+    font-size: 0.9rem;
+}
+.card-price{
+    display: flex;
+    align-items: center;
+}
+.bag-icon{
+    margin-left: 12px;
+    justify-content: space-around;
+    color:#535353;
+}
+.card-discount{
+    display: flex;
+    margin: 5px;
+    color: #bf0603;
+    justify-content: space-around;
+    align-items: center;
+}
+.link {
+    text-decoration: none;
+    color: inherit;  /* Remove underline from links */
+  }

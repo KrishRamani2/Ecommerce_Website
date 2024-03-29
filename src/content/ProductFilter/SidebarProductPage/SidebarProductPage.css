@@ -1,0 +1,136 @@
+.sidebar {
+    flex: 1;
+    border-right: 2px solid #e5e5e5;
+    height: 100%;
+    background-color: rgb(251,251 ,255 ); 
+    position: sticky;
+    top: 50px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: rgba(255, 255, 255, 0.2);
+}
+.logo-container{
+    margin-bottom:4rem;
+    border-bottom: 2px solid #e5e5e5;
+}
+.logo-container h1{
+    margin-top: 1.3rem;
+    
+}
+.sidebarWrapper{
+    padding: 20px;
+    color: #555;
+}
+.sidebarMenu{
+    margin-bottom: 10px;
+}
+.sidebar-title{
+    font-size: 22px;
+    color:rgb(186,186 ,186 );
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+.sidebarList{
+    list-style: none;
+    padding: 5px;
+}
+.sidebarListItem {
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.sidebarListItem.active, .sidebarListItem:hover{
+    background-color: rgb(228,228 ,250 ); 
+    color:white;
+
+}
+.sidebarIcon{
+    margin-right: 5px;
+    font-size: 20px !important;
+
+}
+.sidebar-label-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.sidebar-label-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 19.4px;
+    width: 19.6px;
+    background-color: #eee;
+    border-radius: 100%;
+}
+
+.sidebar-title {
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 30px;
+    color: black;
+}
+
+.sidebar-items {
+    margin-top: 20px;
+}
+
+.sidebar-label-container input:checked ~ .checkmark {
+    background-color: #adb5bd;
+}
+
+.checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.sidebar-label-container input:checked ~ .checkmark::after {
+    display: block;
+}
+
+.sidebar-label-container .checkmark::after {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: white;
+}
+
+.line {
+    margin-top: 3rem;
+    border-color: #f7f7f7;
+}
+.price-title{
+    margin-top: 2rem;
+    color: black;
+
+}
+.ll{
+    
+    margin-top: 20px;
+}
+.all{
+background: linear-gradient(blue,crimson);
+}

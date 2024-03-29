@@ -1,53 +1,66 @@
-// CheckoutForm.jsx
+// // CheckoutForm.jsx
 
-import React from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+// import React from 'react';
+// import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-const CheckoutForm = ({ onToken }) => {
-  const stripe = useStripe();
-  const elements = useElements();
+// const CheckoutForm = ({ onToken }) => {
+//   const stripe = useStripe();
+//   const elements = useElements();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+//   const handleSubmit = async (event) => {
+//     event.preventDefault();
 
-    if (!stripe || !elements) {
-      return;
-    }
+//     if (!stripe || !elements) {
+//       return;
+//     }
 
-    const cardElement = elements.getElement(CardElement);
+//     const cardElement = elements.getElement(CardElement);
 
-    const { token, error } = await stripe.createToken(cardElement);
+//     const { token, error } = await stripe.createToken(cardElement);
 
-    if (error) {
-      console.error(error);
-    } else {
-      onToken(token);
-    }
-  };
+//     if (error) {
+//       console.error(error);
+//     } else {
+//       onToken(token);
+//     }
+//   };
 
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <CardElement />
+//       <button type="submit" style={styles.payNowButton}>
+//         Pay Now
+//       </button>
+//     </form>
+//   );
+// };
+
+// const styles = {
+//   payNowButton: {
+//     backgroundColor: '#4caf50',
+//     color: '#fff',
+//     padding: '15px',
+//     border: 'none',
+//     borderRadius: '8px',
+//     cursor: 'pointer',
+//     fontSize: '18px',
+//     width: '100%',
+//     marginTop: '20px',
+//     transition: 'background-color 0.3s ease-in-out',
+//   },
+// };
+
+// export default CheckoutForm;
+import { loadStripe } from "@stripe/stripe-js";
+import React from 'react'
+
+const CheckoutForm = () => {
+  
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement />
-      <button type="submit" style={styles.payNowButton}>
-        Pay Now
-      </button>
-    </form>
-  );
-};
+    <div>
 
-const styles = {
-  payNowButton: {
-    backgroundColor: '#4caf50',
-    color: '#fff',
-    padding: '15px',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    fontSize: '18px',
-    width: '100%',
-    marginTop: '20px',
-    transition: 'background-color 0.3s ease-in-out',
-  },
-};
+    </div>
+  )
+}
 
-export default CheckoutForm;
+export default CheckoutForm
