@@ -17,10 +17,9 @@ const Tabless = () => {
   const products = useSelector((state) => state.cart.products);
   const [sortedInfo, setSortedInfo] = useState({});
   const [text, setText] = React.useState('https://zeuxinnovation.com/wp-content/uploads/2023/04/maximising-user-satisfaction-1.jpg');
-  const user = useSelector((state) => state.cart.user);
+  const { user } = useSelector((state) => state.user);
   const orderTotalCount = products.reduce((total, product) => total + product.count, 0);
   const getTotalPrice = (count, price) => count * price;
-  const navigate = useNavigate();
   const delivery = 40;
   const platformfee = 5;
   const handlingcharge = 25;
@@ -33,9 +32,66 @@ const Tabless = () => {
   const applyCharges = orderTotal >= 250;
   const ordertotals = products.reduce((total, product) => total + delivery + platformfee + totalhandle + handle + getTotalPrice(product.count, (product.prevPrice)), 0);
   const [stripeToken, setStripeToken] = useState(null);
+  const cart = useSelector((state) => state.cart);
+  const quantity = cart.products.length;
+  console.log(quantity,ordertotals,user);
+  const navigate = useNavigate();
   const onToken = (token) => {
     setStripeToken(token);
   };
+  const amount = ordertotals;
+
+  const generateProductID = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let productID = '';
+    const length = 24;
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      productID += characters[randomIndex];
+    }
+
+    return productID;
+  };
+  const [productId,setProductId] = useState(generateProductID);
+  const [addressflatno,setAddressflatno]  = useState('');
+  const [addressstreet,setAddressstreet]  = useState('');
+  const [addresscity,setAddresscity]  = useState('');
+  const [addressstate,setAddressstate]  = useState('');
+  const [addresspin,setAddresspin]  = useState('');
+  const [addresscontact,setAddresscontact]  = useState('');
+  const userId = user._id;
+  const handleConfirm= async (e) => {
+    e.preventDefault();
+
+    try {
+        const response = await fetch('http://localhost:3000/api/order/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userId,productId,addressflatno,addressstreet,addresscity,addressstate,addresspin,addresscontact,amount,quantity}),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to subscribe');
+        }
+
+        message.success('Order Executed Successfully!');
+        navigate('/successfulpayment')
+        setAddressflatno('');
+        setAddresscity('');
+        setAddresscontact('');
+        setAddressstate('');
+        setAddresspin('');
+        
+
+    } catch (error) {
+        console.error('Error saving:', error.message);
+        message.error('Order Execution Failed!');
+        
+    }
+};
   const KEY = "pk_test_51OPdfHSJqp2Eim97slkP7D9StEmIP94k7XFry53Q9sH2PxIxRvnPH4PlC8ahmHkmrEkkVxFFrShOWln6tDLE07bv00uDbzGVNR";
   useEffect(() => {
     const makeRequest = async () => {
@@ -178,21 +234,33 @@ const Tabless = () => {
           }}
         >
           <div style={{display:"flex",flexDirection:"row"}}>
-            <Input placeholder="Enter Flat No & Residence" style={{margin:"10px"}}></Input>
-            <Input placeholder="Enter Your Street Address" style={{margin:"10px"}}></Input>
+            <Input placeholder="Enter Flat No & Residence" style={{margin:"10px"}}  
+            value={addressflatno}
+            onChange={(e)=>setAddressflatno(e.target.value)}
+            ></Input>
+            <Input placeholder="Enter Your Street Address" style={{margin:"10px"}}
+             onChange={(e)=>setAddressstreet(e.target.value)}
+            ></Input>
           </div>
           <br />
           <div style={{display:"flex",flexDirection:"row"}}>
-            <Input placeholder="Enter Your City" style={{margin:"10px"}}></Input>
-            <Input placeholder="Enter Your State" style={{margin:"10px"}}></Input>
+            <Input placeholder="Enter Your City" style={{margin:"10px"}}
+             onChange={(e)=>setAddresscity(e.target.value)}
+            ></Input>
+            <Input placeholder="Enter Your State" style={{margin:"10px"}}
+             onChange={(e)=>setAddressstate(e.target.value)}
+            ></Input>
           </div>
           <br />
           <div style={{display:"flex",flexDirection:"row"}}>
-            <Input placeholder="Enter Your Pincode" type='number' style={{margin:"10px"}}></Input>
-            <Input placeholder="Enter Your Contact Number" type='number' style={{margin:"10px"}}></Input>
+            <Input placeholder="Enter Your Pincode" type='number' style={{margin:"10px"}}
+             onChange={(e)=>setAddresspin(e.target.value)}
+            ></Input>
+            <Input placeholder="Enter Your Contact Number" type='number' style={{margin:"10px"}}
+             onChange={(e)=>setAddresscontact(e.target.value)}
+            ></Input>
           </div>
           <div>
-            <Button style={{margin:"10px"}}>Submit</Button>
           </div>
         </Collapse.Panel>
         <Collapse.Panel
@@ -233,7 +301,7 @@ const Tabless = () => {
           )}
           {value !== 2 && (
             <div>
-              <Button>Pay</Button>
+              <Button onClick={handleConfirm} >Pay</Button>
             </div>
           )}
         </Collapse.Panel>

@@ -268,7 +268,7 @@ const Heading = ({ cat }) => {
         <input type="checkbox" name="" id="chk1" />
         <div className="logo">
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-            <div className='top'> <h1 style={{ color: "black", marginBottom: "7px", fontSize: "30px" }} >ZENARA <span className='hamicontwo'><HamburgerIcon /></span></h1></div>
+            <div className='top/.'> <h1 style={{ color: "black", marginBottom: "7px", fontSize: "30px" } } >ZENARA <span className='hamicontwo'><HamburgerIcon /></span></h1></div>
           </Link>
         </div>
         <Link to="/searchpage"><div className="search-box" style={{ display: "flex", flexDirection: "row", marginBottom: "12px" }} >

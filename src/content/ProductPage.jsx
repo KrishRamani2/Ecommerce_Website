@@ -345,6 +345,7 @@ const ProductPage = () => {
   console.log(product)
   return (
     <>
+     {contextHolder}
            <Heading />
        <Announcements />
     <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2
@@ -368,7 +369,7 @@ const ProductPage = () => {
     </ul>
     </article>
     <article className="px-8 pb-10 "> 
-      <h2 className="bg-slate-200 py-1 px-2 text-green-500 uppercase tracking-wide text-sm font-bold inline-block rounded shadow mt-12 mb-10">{product.company}</h2>
+      <h2 className="bg-blue-200 py-1 px-2 text-green-500 uppercase tracking-wide text-sm font-bold inline-block rounded shadow mt-12 mb-10" >{product.company}</h2>
       <h1 className="text-slate-900 mb-10 font-bold text-3xl lg:text-4xl">{product.title}</h1>
       <p className='text-slate-600 mb-10 leading-relaxed '>{product.description}</p>
       <div className="flex flex-wrap items-center justify-between lg:flex-col lg:items-start lg:gap-2" >
@@ -377,7 +378,17 @@ const ProductPage = () => {
           <li className="bg-slate-100 py-1 px-2 text-green-400 tracking-wide text-sm font-bold inline-block rounded shadow ">{(((product.prevPrice-product.price)/product.prevPrice)*100).toFixed(2)}%</li>
         </ul>
         <p className="text-slate-600 text-sm "><s>₹{product.prevPrice}</s></p>
-        <ul><li className='font-bold inline-block rounded shadow'>Color:</li></ul>
+        <ul><li className='font-bold inline-block rounded shadow'>Color:
+        <select onChange={(e) => setColor(e.target.value)}><option  value='null'>Select Color</option>
+        <option>{product.color}</option>
+        </select>
+        </li></ul>
+        <ul><li className='font-bold inline-block rounded shadow'>Size:<select onChange={(e) => setsize(e.target.value)}>
+          <option className="w-4"  value='null'>Select size </option>
+          {product.size?.map((s) => (
+     <option key={s}>{s}</option>
+  ))}
+          </select></li></ul>
       </div>
       <div className="mt-10 lg:flex items-center justify-between ">
         <ul className="flex items-center lg:w-4/12  justify-between bg-slate-100 py-2 px-4 rounded shadow ">
@@ -386,7 +397,7 @@ const ProductPage = () => {
           <li onClick={Incum} className='cursor-pointer'><AddOutlinedIcon /></li>
         </ul>
 
-        <Button className="flex items-center gap-4 mb-3 bg-green-600 py-2 px-4 text-white font-bold rounded-lg shadow w-full lg:w-3/12 text-center  justify-center cursor-pointer"><AiOutlineShoppingCart /> Add to Cart</Button>
+        <Button className="flex items-center gap-4 mb-3 bg-green-600 py-2 px-4 text-white font-bold rounded-lg shadow w-full lg:w-3/12 text-center  justify-center cursor-pointer" onClick={handleClick}><AiOutlineShoppingCart /> Add to Cart</Button>
         </div>
         <hr className='mt-5'/>
         <ul className='flex justify-between mt-6'>
@@ -400,6 +411,7 @@ const ProductPage = () => {
     </section>
     <Newsletter />
     <Footer />
+    {showAlert && <AlertPage onClose={closeAlert} />}
     </>
   )
 }
