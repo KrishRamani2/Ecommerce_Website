@@ -15,8 +15,13 @@ const OrderSchema = new mongoose.Schema(
       },
     ],
     amount: { type: Number, required: true },
-    address: { type: Object, required: true },
-    status: { type: String, default: "pending" },
+    addressflatno: { type: String, required: true },
+    addressstreet: { type: String, required: true },
+    addresscity: { type: String, required: true },
+    addressstate: { type: String, required: true },
+    addresspin: { type: Number, required: true },
+    addresscontact: { type: Number, required: true },
+    status: { type: String, default: "Pending" },
   },
   { timestamps: true }
 );
