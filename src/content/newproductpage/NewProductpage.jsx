@@ -136,6 +136,8 @@ const NewProductpage = () => {
   const [inputs, setInputs] = useState({});
   const [cat, setCat] = useState([]);
   const [fileList, setFileList] = useState([]);
+
+
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const dispatch = useDispatch();
@@ -169,7 +171,7 @@ const NewProductpage = () => {
 
     const file = fileList[0];
     const product = { ...inputs, img: file.thumbUrl, categories: cat };
-
+    console.log(file.thumbUrl);
     addProduct(product, dispatch)
       .then(() => {
         message.success('Product created successfully');

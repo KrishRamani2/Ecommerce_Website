@@ -13,11 +13,10 @@ import NewTransactionpage from './components/newTransactionpage/FinalTransaction
 import { useSelector } from 'react-redux';
 const App =()=>{
   const admin = "JSON.parse(JSON.parse(localStorage.getItem(persist:root)).currentUser).isAdmin";
-  const user = useSelector(state => state.user);
    return(
     <>   
     <Routes>
-    <Route path="/"  element={user ? <Navigate to="/" /> : <Navigate to="/adminpage" /> } />
+    <Route path="/"  Component={LoginAdmin} />
     <Route path="/adminpage" Component={Adminpage} /> 
     <Route path="/userpage" Component={Userpage} />
     <Route path="/user/:id" Component={UserId} />
