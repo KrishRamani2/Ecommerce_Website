@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Visibility } from '@mui/icons-material';
 import "./WidgetSmall.css";
-
 const WidgetSmall = () => {
   const [users, setUsers] = useState([]);
-
   useEffect(() => {
     const getUsers = async () => {
       try {
@@ -20,7 +18,7 @@ const WidgetSmall = () => {
   }, []);
 
   // Sort users by join date and get the top 5
-  const topFiveUsers = users.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 3);
+  const topFiveUsers = users.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
 
   return (
     <div className="widgetSm">

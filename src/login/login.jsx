@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import "./login.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector} from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import { loginSuccess } from '../redux/Userslice';
 import { message } from 'antd';
+import { logingate } from '../../../ecommerce/src/redux/ApiCalls';
 
 const Container = styled.div`
     margin: 0;
@@ -20,27 +21,22 @@ const Container = styled.div`
 `;
 
 const LoginAdmin = () => {
-  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loginError, setLoginError] = useState("");
+  const navigate = useNavigate();
+  const { isFetching, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  const handleClick = async (e) => {
-    e.preventDefault();  
+  const handleLogin = async (e) => {
     try {
-      await dispatch(loginSuccess({ username, password }));
+      e.preventDefault();
+      logingate(dispatch, { username, password });
       message.success('Login Successful');
-      navigate("/adminpage")
-      setLoginError("");
+      navigate("/adminpage");
     } catch (error) {
-      // Login failed
       console.error('Error Login:', error.message);
       message.error('Login Error');
-      setLoginError("Login failed. Please check your credentials.");
     }
-  }
-
+  };
   return (
     <>
       <Container>
@@ -48,13 +44,13 @@ const LoginAdmin = () => {
           <form action="">
             <h1>ZENARA SELLER</h1>
             <h1>Login</h1>
-            {loginError && <div className="error-message">{loginError}</div>}
             <div className='input-box'>
-              <input type="text" placeholder='Username' required={true} onChange={e => setUsername(e.target.value)} />
+              <input type="text" placeholder='Username' required={true} onChange={(e) => setUsername(e.target.value)} />
               <FaUser className='icon' />
             </div>
             <div className='input-box'>
-              <input type="password" placeholder='Password' required={true} onChange={e => setPassword(e.target.value)} />
+              <input type="password" placeholder='Password' required={true}               
+              onChange={(e) => setPassword(e.target.value)}/>
               <FaLock className='icon' />
             </div>
 
@@ -62,7 +58,7 @@ const LoginAdmin = () => {
               <label><input type='checkbox' />Remember me</label>
               <Link to='/forgotpassword'>Forgot Password?</Link>
             </div>
-            <button type='submit' onClick={handleClick}>Login</button>
+            <button type='submit' onClick={handleLogin}>Login</button>
             <div className="register-link">
               <p>Don't have an account?<Link to='http://localhost:5173/signup'> Register</Link></p>
             </div>

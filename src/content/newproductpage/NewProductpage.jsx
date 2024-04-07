@@ -1,129 +1,3 @@
-// import React, { useState } from 'react';
-// import "./Newproductpage.css";
-// import { IoCloudUploadOutline } from "react-icons/io5";
-// import { useDispatch } from "react-redux";
-// import {
-//   getStorage,
-//   ref,
-//   uploadBytesResumable,
-//   getDownloadURL,
-// } from "firebase/storage";
-// import { addProduct } from "../../redux/ApiCallsAdmin.js";
-// import app from "../../Firebase/DataBase.js";
-// import { Input, Select , message,Button } from 'antd';
-
-// const NewProductpage = () => {
-//   const [inputs, setInputs] = useState({});
-//   const [file, setFile] = useState(null);
-//   const [cat, setCat] = useState([]);
-//   const dispatch = useDispatch();
-
-//   const handleChange = (e) => {
-//     if (e.target.name === 'file') {
-//       setFile(e.target.files[0]);
-//     } else {
-//       setInputs(prev => {
-//         return { ...prev, [e.target.name]: e.target.value };
-//       });
-//     }
-//   };
-
-//   const handleCat = (e) => {
-//     setCat(e.target.value.split(","));
-//   };
-
-//   const handleClick = (e) => {
-//     e.preventDefault();
-//     if (!file) {
-//       console.log("No file selected");
-//       return;
-//     }
-    
-//     const fileName = new Date().getTime() + file.name;
-//     const storage = getStorage(app);
-//     const storageRef = ref(storage, fileName);
-  
-//     const uploadTask = uploadBytesResumable(storageRef, file);
-//     uploadTask.on('state_changed', 
-//       (snapshot) => {
-//         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//         console.log('Upload is ' + progress + '% done');
-//         switch (snapshot.state) {
-//           case 'paused':
-//             console.log('Upload is paused');
-//             break;
-//           case 'running':
-//             console.log('Upload is running');
-//             break;
-//         }
-//       }, 
-//       (error) => {
-//         console.log("Not Uploaded");
-//       }, 
-//       () => {
-//         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-//           const product = { ...inputs, img: downloadURL, categories: cat };
-//           console.log(downloadURL);
-//           addProduct(product, dispatch);
-//           message.success('Product created successfully');
-//         });
-//       }
-//     );
-//   };
-
-
-//   return (
-//     <div className="newProduct">
-//       <h1 className="addProductTitle">New Product</h1>
-//       <form className="addProductForm">
-//         <div className="addProductItem">
-//           <label>Image</label>
-//           <Input type="file" id="file" name="file" onChange={handleChange} />
-//         </div>
-//         <div className="addProductItem">
-//           <label>Title</label>
-//           <Input name='title' type="text" placeholder="Enter the title" onChange={handleChange} />
-//         </div>
-//         <div className="addProductItem">
-//           <label>Company</label>
-//           <Input name='company' type="text" placeholder="Enter Company name" onChange={handleChange} />
-//         </div>
-//         <div className="addProductItem">
-//           <label>Description</label>
-//           <Input name='description' type="text" placeholder="Enter the product description" onChange={handleChange} />
-//         </div>
-//         <div className="addProductItem">
-//           <label>Size</label>
-//           <Input name='size' type="text" placeholder="Enter the size" onChange={handleChange} />
-//         </div>
-//         <div className="addProductItem">
-//           <label>Categories</label>
-//           <Input name='category' type="text" placeholder="Enter the Category " onChange={handleCat} />
-//         </div>
-//         <div className="addProductItem">
-//           <label>Price</label>
-//           <Input name='price' type="text" placeholder="Enter the price" onChange={handleChange} />
-//         </div>
-//         <div className="addProductItem">
-//           <label>MRP</label>
-//           <Input name='prevPrice' type="text" placeholder="Enter MRP" onChange={handleChange} />
-//         </div>
-//         <div className="addProductItem">
-//           <label>Color</label>
-//           <Input name='color' type="text" placeholder="Enter the color" onChange={handleChange} />
-//         </div>
-//         <div className="addProductItem">
-//           <label>Stock</label>
-//           <Input  type="text" name="instock" placeholder="Enter the quantity" onChange={handleChange} />
-//         </div>
-
-//         <button onClick={handleClick} className="addProductButton">Create</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default NewProductpage;
 import React, { useState } from 'react';
 import "./Newproductpage.css";
 import { useDispatch } from "react-redux";
@@ -131,13 +5,13 @@ import { message, Input, Button } from 'antd';
 import { addProduct } from "../../redux/ApiCallsAdmin.js";
 import { Upload, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Importing getDownloadURL function
+import app from "../../Firebase/DataBase.js";
 
 const NewProductpage = () => {
   const [inputs, setInputs] = useState({});
   const [cat, setCat] = useState([]);
   const [fileList, setFileList] = useState([]);
-
-
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const dispatch = useDispatch();
@@ -163,23 +37,32 @@ const NewProductpage = () => {
     setFileList(fileList);
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!fileList.length) {
-      message.error('Please upload an image');
+      message.error('Please upload at least one image');
       return;
     }
 
-    const file = fileList[0];
-    const product = { ...inputs, img: file.thumbUrl, categories: cat };
-    console.log(file.thumbUrl);
-    addProduct(product, dispatch)
-      .then(() => {
-        message.success('Product created successfully');
-      })
-      .catch(error => {
-        console.log("Add product error:", error);
-        message.error('Failed to create product');
-      });
+    const storage = getStorage(app);
+    const images = [];
+    for (const file of fileList) {
+      const storageRef = ref(storage, `images/${file.name}`);
+      try {
+        await uploadBytes(storageRef, file.originFileObj);
+        const downloadURL = await getDownloadURL(storageRef);
+        images.push(downloadURL);
+      } catch (error) {
+        console.error("Upload failed:", error);
+        message.error('Failed to upload image');
+        return;
+      }
+    }
+    const product = { ...inputs, img: images[0], img1: images[1], img2: images[2], img3: images[3], img4: images[4], img5: images[5], categories: cat };
+    
+    addProduct(product, dispatch);
+    setInputs({});
+    setFileList([]);
+    message.success('Product created successfully');
   };
 
   const uploadButton = (
@@ -189,6 +72,7 @@ const NewProductpage = () => {
     </div>
   );
 
+
   return (
     <div className="newProduct">
       <h1 className="addProductTitle">New Product</h1>
@@ -196,13 +80,14 @@ const NewProductpage = () => {
         <div className="addProductItem">
           <label>Image</label>
           <Upload
-            listType="picture-card"
-            fileList={fileList}
-            onPreview={handlePreview}
-            onChange={handleFileChange}
-          >
-            {fileList.length >= 1 ? null : uploadButton}
-          </Upload>
+  listType="picture-card"
+  fileList={fileList}
+  onPreview={handlePreview}
+  onChange={handleFileChange}
+  multiple // Enable multiple file selection
+>
+  {fileList.length >= 6 ? null : uploadButton} {/* Limit the number of files to 5 */}
+</Upload>
           <Modal visible={previewVisible} footer={null} onCancel={handleCancel}>
             <img alt="Preview" style={{ width: '100%' }} src={previewImage} />
           </Modal>
