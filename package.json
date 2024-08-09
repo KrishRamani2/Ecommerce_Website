@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "ant-design/cssinjs": "^1.18.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -51,6 +50,6 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
-    "vite": "^5.0.0"
+    "vite": "^5.4.0"
   }
 }

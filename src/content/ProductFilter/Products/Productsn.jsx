@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Sidebar from '../../../../../ecommerceadmin/src/components/sidebar/Sidebar'
-import ProductList from '../../ProductList'
 import Heading from '../../../components/Heading'
 import Announcements from '../../../components/Announcements'
 import "./Productsn.css"
-import SidebarProductPage from '../SidebarProductPage/SidebarProductPage'
 import Newsletter from '../../../components/Newsletter'
 import Footer from '../../../components/Footer'
 import { useLocation } from 'react-router-dom'
 import Recommended from '../Recommended/Recommended'
 import axios from 'axios'
-import FilteredItem from '../Recommended/FilteredProducts'
-import FinalProductPage from '../../../components/FinalProductPage'
 const Productsn = () => {
   const location = useLocation();
   const cat = location.pathname.split("/")[2];
